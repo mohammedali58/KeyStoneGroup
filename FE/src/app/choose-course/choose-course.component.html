@@ -1,0 +1,129 @@
+@if(!this.assets.course()){
+<h3 class="text-4xl font-serif my-6">Search For Your Course</h3>
+}@else {
+<h3 class="text-4xl font-serif my-6">You have chosen your course</h3>
+
+}
+<form [formGroup]="searchForm" (ngSubmit)="onSubmit($event)">
+  <div class="flex flex-col align-middle justify-center content-center">
+    <div class="flex justify-between content-center align-middle w-3/4 m-auto">
+      <div class="my-2 flex">
+        <label for="title-input" class="mr-3 w-24">Title</label>
+        <input
+          formControlName="courseName"
+          id="title-input"
+          type="text"
+          placeholder="course title"
+          class="w-52 input input-bordered input-primary max-w-xs"
+        />
+      </div>
+      <div class="my-2 flex">
+        <label for="category-input" class="mr-3 w-24">Category</label>
+        <input
+          formControlName="category"
+          id="category-input"
+          type="text"
+          class="w-52 input input-bordered input-primary max-w-xs"
+        />
+      </div>
+    </div>
+
+    <div class="flex justify-between content-center align-middle w-3/4 m-auto">
+      <select
+        class="select select-primary w-full max-w-xs inline-block mt-4"
+        formControlName="languageId"
+      >
+        <option disabled selected>Languages</option>
+        @for(lang of languages; track $index){
+        <option [value]="$index + 1">{{ lang }}</option>
+        }
+      </select>
+
+      <select
+        class="select select-primary w-full max-w-xs inline-block mt-4"
+        formControlName="deliveryMethodId"
+      >
+        <option disabled selected>Delivery Method</option>
+        @for (method of deliveryMethods; track $index) {
+        <option [value]="$index + 1">{{ method }}</option>
+
+        }
+      </select>
+    </div>
+
+    <div class="flex justify-center mt-6">
+      <button
+        class="btn btn-primary w-1/2"
+        type="submit"
+        [disabled]="this.assets.course()"
+      >
+        Search
+      </button>
+    </div>
+  </div>
+</form>
+
+@if( loadingCourses && this.assets.contact() ){
+<div class="flex justify-center content-center align-middle mt-8">
+  <span class="loading loading-ring loading-lg"></span>
+</div>
+} @if(this.assets.course()) {
+<div class="card bg-neutral text-neutral-content m-4 w-1/4 mx-auto">
+  <div class="card-body items-center text-center">
+    <h2 class="text-lg font-bold text-violet-600 font-mono">
+      {{ this.assets.course()?.courseName }}
+    </h2>
+    <p>Location: {{ this.assets.course()?.location }}</p>
+    <p>Category: {{ this.assets.course()?.category }}</p>
+    <p>Language: {{ this.assets.course()?.language }}</p>
+    <p>deliveryMethod: {{ this.assets.course()?.deliveryMethod }}</p>
+    <p>
+      Start Date: {{ this.assets.course()?.startDate | date : "shortDate" }}
+    </p>
+    <div class="card-actions justify-end my-3">
+      <button class="btn btn-primary" (click)="onREmoveCourse()">Remove</button>
+    </div>
+  </div>
+</div>
+} @if(!loadingCourses && !this.assets.course()) {
+<div class="flex flex-wrap justify-center content-center align-middle mt-4">
+  @for(course of pageCourses; track course.id) {
+
+  <div class="card bg-neutral text-neutral-content m-4 w-1/4">
+    <div class="card-body items-center text-center">
+      <h2 class="text-lg font-bold text-violet-600 font-mono">
+        {{ course.courseName }}
+      </h2>
+      <p>Location: {{ course.location }}</p>
+      <p>Category: {{ course.category }}</p>
+      <p>Language: {{ course.language }}</p>
+      <p>deliveryMethod: {{ course.deliveryMethod }}</p>
+      <p>Start Date: {{ course.startDate | date : "shortDate" }}</p>
+      <div class="card-actions justify-end my-3">
+        <button class="btn btn-primary" (click)="onChoseCourse(course.id)">
+          Choose
+        </button>
+      </div>
+    </div>
+  </div>
+
+  }
+</div>
+<div class="flex justify-center my-4">
+  <button
+    class="btn btn-primary w-32 mr-3"
+    (click)="onPreviousPage()"
+    [disabled]="previousDisabled"
+  >
+    Previous
+  </button>
+
+  <button
+    class="btn btn-primary w-32"
+    (click)="onNextPage()"
+    [disabled]="nextDisable"
+  >
+    Next
+  </button>
+</div>
+}

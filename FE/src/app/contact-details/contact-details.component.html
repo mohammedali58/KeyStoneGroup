@@ -1,0 +1,69 @@
+@if(!this.assets.contact()){
+<h3 class="text-4xl font-serif my-6">Enter Your Contact Details</h3>
+} @if(this.assets.contact()) {
+
+<h3 class="text-4xl font-serif my-6">Your Contact Details</h3>
+} @if(!this.assets.contact()){
+<form [formGroup]="contactFormGroup" (ngSubmit)="onSubmit($event)">
+  <div class="flex flex-col align-middle justify-center content-center">
+    <div class="flex justify-between w-3/4 m-auto">
+      <div class="my-2 flex">
+        <label for="name-input" class="mr-3 w-24">Full Name</label>
+        <input
+          formControlName="fullName"
+          id="name-input"
+          type="text"
+          placeholder="your name"
+          class="w-52 input input-bordered input-primary max-w-xs"
+        />
+      </div>
+      <div class="my-2 flex">
+        <label for="email-input" class="mr-3 w-24">Email</label>
+        <input
+          formControlName="email"
+          id="email-input"
+          type="email"
+          placeholder="example@gmail.com"
+          class="w-52 input input-bordered input-primary max-w-xs"
+        />
+      </div>
+    </div>
+    <div class="flex justify-between w-3/4 m-auto">
+      <div class="my-2 flex">
+        <label for="age-input" class="mr-3 w-24">Mobile</label>
+        <input
+          formControlName="phoneNumber"
+          id="age-input"
+          type="string"
+          class="w-52 input input-bordered input-primary max-w-xs"
+        />
+      </div>
+      <div class="my-2 flex">
+        <label for="address-input" class="mr-3 w-24">Address</label>
+        <input
+          formControlName="address"
+          id="aaddress-input"
+          type="text"
+          placeholder=""
+          class="w-52 input input-bordered input-primary max-w-xs"
+        />
+      </div>
+    </div>
+    <div class="flex justify-center mt-6">
+      <button class="btn btn-primary w-1/2 mb-3" type="submit">Send</button>
+    </div>
+  </div>
+</form>
+} @if(this.assets.contact()){
+<div class="hero">
+  <div class="max-w-md">
+    <h1 class="text-5xl font-bold">{{ this.assets.contact()!.fullName }}</h1>
+    <p class="py-2">Email: {{ this.assets.contact()!.email }}</p>
+    <p class="py-2">Mobile: {{ this.assets.contact()!.phoneNumber }}</p>
+    <p class="py-2">Address: {{ this.assets.contact()!.address }}</p>
+    <button class="btn btn-primary mb-4" (click)="onClearPersonalData()">
+      Clear Personal Data
+    </button>
+  </div>
+</div>
+}

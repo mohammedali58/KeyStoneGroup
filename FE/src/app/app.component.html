@@ -1,0 +1,42 @@
+<app-nav-bar></app-nav-bar>
+@if(this.notificationService.errorOccurs()){
+<div class="toast toast-top">
+  <div class="alert alert-error">
+    <span>{{ this.notificationService.errorMsg() }}</span>
+  </div>
+</div>
+} @if(this.notificationService.successOccurs()){
+<div class="toast toast-top">
+  <div class="alert alert-success">
+    <span>{{ this.notificationService.successMsg() }}</span>
+  </div>
+</div>
+}
+<main class="mx-4 mt-4">
+  <app-choose-course></app-choose-course>
+
+  <span class="flex items-center">
+    <span class="h-px flex-1 bg-gray-500"></span>
+  </span>
+
+  @if(assets.course()){
+  <app-contact-details></app-contact-details>
+  }
+</main>
+<footer class="footer p-10 bg-base-200 text-base-content">
+  <aside>
+    <div class="avatar">
+      <div class="w-24 mask mask-hexagon">
+        <img src="../assets/keystone.png" />
+      </div>
+    </div>
+  </aside>
+
+  <nav>
+    <header class="footer-title">Keystone</header>
+    <a class="link link-hover"
+      >Connects universities and educational institutions with students at the
+      right time in the right place.
+    </a>
+  </nav>
+</footer>
